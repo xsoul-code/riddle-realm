@@ -13,4 +13,10 @@ g++ -std=c++20 -o program2 (include all the files from /src)
 
 ## Screenshots
 
-![Game menu with ASCII art](docs/game-alpha1.png)
+### Menu showcase with command list
+
+![Game menu with colors and cmd list](docs/cmd-showcase.png)
+
+### In game commands showcase with context command constraints
+
+![In game cmds showcase](docs/inmenu-showcase.png)
