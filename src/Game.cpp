@@ -3,61 +3,57 @@
 #include <algorithm>
 #include <map>
 #include "../include/Game.hpp"
-//#include "../include/GameState.hpp"
+#include "../include/GameState.hpp"
+#include "../include/Cmd.hpp"
 //#include "../include/GameHUD.hpp"
-
-enum class Cmd{
-    START,
-    END,
-    CREDITS,
-};
-
-const std::map<std::string, Cmd> cmdMap {
-    {"start", Cmd::START},
-    {"go", Cmd::START},
-
-    {"end", Cmd::END},
-
-    {"credits", Cmd::CREDITS},
-    {"cred", Cmd::CREDITS}
-};
 
 Game::Game() {
     isRunning = true;
 }
 
-Game::~Game() {}
+Game::~Game() {
+    
+}
 
-void Game::update(auto ipt) {
-    switch(ipt) {
+void Game::update(std::string ipt) {
+    GameState gSt;
+    std::transform(input.begin(), input.end(), input.begin(), ::tolower); // To lower input
+    auto var = cmdMap.find(input);
+    if(var != cmdMap.end()) {
+        Cmd cmd = var->second;
+        switch(cmd) {
         case Cmd::START:
-            std::cout << "START" << std::endl;
+            std::cout << "START\n";
+            gSt.Menu();
             break;
         case Cmd::END:
-            std::cout << "Ending..." << std::endl;
+            std::cout << "Ending...\n";
             isRunning = false;
             break;
         case Cmd::CREDITS:
-            std::cout << "Credits" << std::endl;
+            std::cout << "Credits\n";
             break;
-        default:  // Fallback this should not be executed because of run() if check
-            std::cout << "Unknown Command!" << std::endl;
+        default:  
+            gSt.process(var);
+        }
+    } 
+    else {
+        std::cout << "We are empty!\n"; 
     }
+
+}
+ 
+void Game::render() {
+    
 }
 
 void Game::run() {
+    
     while (isRunning) {
-        int ap = 0;
-        std::cout << "The Game is Running...\n";
+        std::cout << "Enter your command ---> ";
         std::getline(std::cin, input);
-        std::transform(input.begin(), input.end(), input.begin(), ::tolower); // To lower input
-        auto type = cmdMap.find(input);
-        if(type != cmdMap.end()) {
-            Cmd cmd = type->second;
-            update(cmd);
-        }
-        else {
-            std::cout << "Unknown Command!\n";
-        }
+        std::cout << "\n";
+        update(input);
+        render();
     }
 }

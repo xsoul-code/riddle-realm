@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "../include/Game.hpp"
+#include "../include/GameState.hpp"
 
 void printASCII(const std::string& filename) {
     std::fstream file(filename);
@@ -19,7 +20,11 @@ void printASCII(const std::string& filename) {
 int main() {
     printASCII("../misc/mainmenu.txt");
     std::cout << "Terminal Game v1.0 - Why did I do this to myself? \n"; 
-    std::cout << "---> start, end, credits\n";
+    std::cout << "List of cmds ---> ";
+    for(const auto& [key, _] : cmdMap) {
+        std::cout << key << ", ";
+    }
+    std::cout << "\n";
     Game game;
     game.run();
     return 0;

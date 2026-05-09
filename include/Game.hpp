@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "GameState.hpp"
 
 class Game {
 private:
@@ -10,6 +11,6 @@ public:
     Game();
     ~Game();
     void run();
-    void update(auto ipt);
+    void update(std::string ipt);
     void render();
 };
