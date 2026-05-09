@@ -3,8 +3,10 @@
 #include <algorithm>
 #include "../include/GameState.hpp"
 #include "../include/Cmd.hpp"
+#include "../include/Tools.hpp"
 
 GameState::GameState() {
+    GameState::state = 0;
 }
 
 void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
@@ -34,13 +36,18 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
             break;
         }
         default: {
-            throw std::runtime_error("Unexpected Error!\n");
+            SetTerminalColor(T_Green);
+            std::cout << input->first;
+            SetTerminalColor(T_Magenta);
+            std::cout << " is not an accessible expression from here\n";
+            ResetTerminalColor();
             break;
         }
     }
 }
 
 void GameState::Menu() {
+    clearScreen();
     state = 1;
     std::cout << "Menu!\n"; 
 }

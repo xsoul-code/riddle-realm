@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../include/Game.hpp"
 #include "../include/GameState.hpp"
+#include "../include/Tools.hpp"
 
 void printASCII(const std::string& filename) {
     std::fstream file(filename);
@@ -18,13 +19,11 @@ void printASCII(const std::string& filename) {
 }
 
 int main() {
+    SetTerminalColor(T_Green);
     printASCII("../misc/mainmenu.txt");
+    SetTerminalColor(T_BrGreen);
     std::cout << "Terminal Game v1.0 - Why did I do this to myself? \n"; 
-    std::cout << "List of cmds ---> ";
-    for(const auto& [key, _] : cmdMap) {
-        std::cout << key << ", ";
-    }
-    std::cout << "\n";
+    ResetTerminalColor();
     Game game;
     game.run();
     return 0;

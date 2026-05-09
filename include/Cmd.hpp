@@ -1,6 +1,5 @@
 #pragma once
 #include <map>
-#include <algorithm>
 #include <string>
 
 enum class Cmd{
@@ -12,7 +11,8 @@ enum class Cmd{
     ITEMSHOP,
     HERO,
     ADVENTURE,
-    BIOMES
+    BIOMES,
+    L_CMD
 };
 
 const std::map<std::string, Cmd> cmdMap {
@@ -36,7 +36,10 @@ const std::map<std::string, Cmd> cmdMap {
 
     {"tp", Cmd::BIOMES},
 
-    {"exp", Cmd::ADVENTURE}
+    {"exp", Cmd::ADVENTURE},
+
+    {"cmd", Cmd::L_CMD},
+    {"help", Cmd::L_CMD}
 };
 
 
