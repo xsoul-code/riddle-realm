@@ -8,7 +8,11 @@ This project aims to combine solving basic riddles as quests to gain experience,
 
 Bash
 ```
-g++ -std=c++20 -o program2 (include all the files from /src)
+# Compiling the repository
+make
+
+# Cleaning up 
+make clean
 ```
 
 ## Screenshots
