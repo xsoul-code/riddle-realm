@@ -1,4 +1,5 @@
 src/program
 src/program2
 misc/addon.txt
-program2
+riddlerealm
+src/*.o

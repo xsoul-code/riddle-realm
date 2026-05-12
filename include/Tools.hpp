@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 
 #define T_Black 30
 #define T_Red 31
@@ -20,6 +21,8 @@
 #define T_BrWhite 97
 
 void clearScreen();
+
+void printASCII(const std::string& filename);
 
 void SetTerminalColor(int textColor); 
 

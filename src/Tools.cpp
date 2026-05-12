@@ -16,3 +16,17 @@ void SetTerminalColor(int textColor) {
 void ResetTerminalColor() {
     std::cout << "\033[0m";
 }
+
+void printASCII(const std::string& filename) {
+    std::fstream file(filename);
+
+    if(!file.is_open()) {
+        std::cerr << "Error: Cannot open ASCII file " << filename << "\n";
+        return;
+    }
+    std::string line;
+    while(std::getline(file, line)) {
+        std::cout << line << "\n";
+    }
+    file.close();
+}

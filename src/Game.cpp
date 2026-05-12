@@ -5,7 +5,7 @@
 #include "../include/GameState.hpp"
 #include "../include/Cmd.hpp"
 #include "../include/Tools.hpp"
-//#include "../include/GameHUD.hpp"
+#include "../include/GameHUD.hpp"
 
 Game::Game() {
     isRunning = true;
@@ -26,9 +26,9 @@ void Game::commandList() {
 }
 
 void Game::update(std::string ipt) {
-    GameState gSt;
+    
     std::transform(input.begin(), input.end(), input.begin(), ::tolower); // To lower input
-    auto var = cmdMap.find(input);
+    auto var = cmdMap.find(ipt);
     if(var != cmdMap.end()) {
         Cmd cmd = var->second;
         if(!isInitialized) {

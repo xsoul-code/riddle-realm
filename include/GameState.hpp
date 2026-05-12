@@ -17,4 +17,5 @@ public:
     void Adventure();
     void Hero();
     void Biomes();
+    void displayCurrState();
 };

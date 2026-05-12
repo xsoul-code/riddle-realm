@@ -10,37 +10,106 @@ GameState::GameState() {
 }
 
 void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
-    switch(input->second) {
-        case Cmd::MENU: {
-            Menu();
+    if(state == 0) {
+        switch(input->second) {
+            case Cmd::MENU: {
+                std::cout << "You are in Menu already!\n";
+                break;
+            }
+            case Cmd::NEWGAME: {
+                std::cout << "You've chosen to create a new adventure.\n";
+                NewGame();
+                break;
+            }
+            case Cmd::L_CMD: {
+                std::cout << "List of Menu cmds: ";
+                for(const auto& [cmd, _] : cmdMap) {
+                    SetTerminalColor(T_BrYellow);
+                    std::cout << cmd << ", " << std::endl;
+                }
+                break;
+            }
+            case Cmd::LOAD: {
+                std::cout << "LOAD GAME - Comming soon!\n";
+                break;
+            }
+            case Cmd::WHERE: {
+                displayCurrState();
+                break;
+            }
+            default: {
+                SetTerminalColor(T_Green);
+                std::cout << input->first;
+                SetTerminalColor(T_Magenta);
+                std::cout << " cannot be used here. You must be in-game.\n";
+                ResetTerminalColor();
+                break;
+            }
+        }
+    }
+    else {
+        switch(input->second) {
+            case Cmd::ITEMSHOP: {
+                ItemShop();
+                break;
+            }
+            case Cmd::HERO: {
+                Hero();
+                break;
+            }
+            case Cmd::ADVENTURE: {
+                Adventure();
+                break;
+            }
+            case Cmd::BIOMES: {
+                Biomes();
+                break;
+            }
+            case Cmd::WHERE: {
+                displayCurrState();
+                break;
+            }
+            default: {
+                SetTerminalColor(T_Green);
+                std::cout << input->first;
+                SetTerminalColor(T_Magenta);
+                std::cout << " is not an in-game command.\n";
+                ResetTerminalColor();
+                break;
+            }
+        }
+    }
+}
+
+void GameState::displayCurrState() {
+    SetTerminalColor(T_BrCyan);
+    switch(state) {
+        case 0: {
+            std::cout << "You are in main menu.\n"; 
             break;
         }
-        case Cmd::NEWGAME: {
-            NewGame();
+        case 1: {
+            std::cout << "You are in new game creation.\n";
             break;
         }
-        case Cmd::ITEMSHOP: {
-            ItemShop();
+        case 2: {
+            std::cout << "You are in your local ItemShop.\n";
             break;
         }
-        case Cmd::HERO: {
-            Hero();
+        case 3: {
+            std::cout << "You are pursuing an adventure.\n";
             break;
         }
-        case Cmd::ADVENTURE: {
-            Adventure();
+        case 4: {
+            std::cout << "You are viewing your hero.\n";
             break;
         }
-        case Cmd::BIOMES: {
-            Biomes();
+        case 5: {
+            std::cout << "You are admiring biomes.\n";
             break;
         }
         default: {
-            SetTerminalColor(T_Green);
-            std::cout << input->first;
-            SetTerminalColor(T_Magenta);
-            std::cout << " is not an accessible expression from here\n";
-            ResetTerminalColor();
+            std::cout << "You are in uncharted territory\n";
             break;
         }
     }
@@ -48,31 +117,36 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
 
 void GameState::Menu() {
     clearScreen();
-    state = 1;
-    std::cout << "Menu!\n"; 
+    state = 0;
+    SetTerminalColor(T_BrWhite);
+    std::cout << "Welcome to RiddleRealm!\n"; 
+    std::cout << "\nA game which aims to combine idle grind with a sprinkle of mind puzzles. ";
+    std::cout << "This is an open source project created solely for fun of programming and problem-solving.\n";
+    std::cout << "Start a new game or load up from save (comming soon!) to begin your adventure!\n";
+    ResetTerminalColor();
 }
 
 void GameState::NewGame() {
-    state = 2;
+    state = 1;
     std::cout << "NewGame!\n";
 }
 
 void GameState::ItemShop() {
-    state = 3;
+    state = 2;
     std::cout << "ItemShop!\n";
 }
 
 void GameState::Adventure() {
-    state = 4;
+    state = 3;
     std::cout << "Adventure!\n";
 }
 
 void GameState::Hero() {
-    state = 5;
+    state = 4;
     std::cout << "Hero!\n"; 
 }
 
 void GameState::Biomes() {
-    state = 6;
+    state = 5;
     std::cout << "Biomes!\n";
 }

@@ -12,7 +12,9 @@ enum class Cmd{
     HERO,
     ADVENTURE,
     BIOMES,
-    L_CMD
+    L_CMD,
+    LOAD,
+    WHERE
 };
 
 const std::map<std::string, Cmd> cmdMap {
@@ -39,7 +41,12 @@ const std::map<std::string, Cmd> cmdMap {
     {"exp", Cmd::ADVENTURE},
 
     {"cmd", Cmd::L_CMD},
-    {"help", Cmd::L_CMD}
+    {"help", Cmd::L_CMD},
+
+    {"load", Cmd::LOAD},
+
+    {"where", Cmd::WHERE},
+    {"?", Cmd::WHERE}
 };
 
 
