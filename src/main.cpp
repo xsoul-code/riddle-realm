@@ -4,6 +4,7 @@
 #include "../include/Tools.hpp"
 
 int main() {
+    clearScreen();
     SetTerminalColor(T_Green);
     printASCII("misc/mainmenu.txt");
     SetTerminalColor(T_BrGreen);

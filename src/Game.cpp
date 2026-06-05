@@ -17,8 +17,13 @@ Game::~Game() {}
 void Game::commandList() {
     SetTerminalColor(T_BrBlue);
     std::cout << "List of cmds ---> ";
-    SetTerminalColor(T_BrGreen);
-    for(const auto& [key, _] : cmdMap) {
+    int state = GameState::getState();
+    for(const auto& [key, cmd] : cmdMap) {
+        auto ctx = cmdCtxMap.at(cmd);
+        if(!isInitialized && ctx != CmdCtx::PRE_GAME && ctx != CmdCtx::ALWAYS) continue;
+        if(isInitialized && state == 0 && ctx != CmdCtx::MENU && ctx != CmdCtx::ALWAYS) continue;
+        if(isInitialized && state > 0 && ctx != CmdCtx::IN_GAME && ctx != CmdCtx::ALWAYS) continue;
+        SetTerminalColor(isInitialized ? T_BrYellow : T_BrGreen);
         std::cout << key << ", ";
     }
     std::cout << "\n";
@@ -61,7 +66,8 @@ void Game::update(std::string ipt) {
         else {
             switch(cmd) {
                 case Cmd::END:
-                    std::cout << "Ending...\n";
+                    clearScreen();
+                    std::cout << "Exiting...\n";
                     // TODO: Implement safe program end cycle
                     isRunning = false;
                     break;
@@ -74,7 +80,7 @@ void Game::update(std::string ipt) {
                 }
             }
         }
-    } 
+    }
     else {
         SetTerminalColor(T_Red);
         std::cout << "Unexpected Command! (cmd or help for list of commands) \n"; 

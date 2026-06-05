@@ -3,3 +3,4 @@ src/program2
 misc/addon.txt
 riddlerealm
 src/*.o
+.vscode/

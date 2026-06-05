@@ -4,6 +4,9 @@
 #include "../include/GameState.hpp"
 #include "../include/Cmd.hpp"
 #include "../include/Tools.hpp"
+#include "../include/GameHUD.hpp"
+
+int GameState::state = 0;
 
 GameState::GameState() {
     GameState::state = 0;
@@ -30,7 +33,7 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
                 break;
             }
             case Cmd::LOAD: {
-                std::cout << "LOAD GAME - Comming soon!\n";
+                std::cout << "LOAD GAME - Coming soon!\n";
                 break;
             }
             case Cmd::WHERE: {
@@ -144,6 +147,7 @@ void GameState::Adventure() {
 void GameState::Hero() {
     state = 4;
     std::cout << "Hero!\n"; 
+    HUD.printGenericInfo();
 }
 
 void GameState::Biomes() {

@@ -5,9 +5,10 @@
 
 class GameState { 
 private:
-    int state;
-    std::string passInput;
+    static int state;
 public:
+    static int getState() { return state; }
+    GameHUD HUD;
     GameState();
     ~GameState() = default;
     void process(std::map<std::string, Cmd>::const_iterator input);

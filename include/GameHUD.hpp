@@ -1,5 +1,12 @@
 #pragma once
 #include <string>
+#include <map>
+
+enum class Biomes {
+    Woods,
+    Lands,
+    CastleLand
+};
 
 class GameHUD {
 private:
@@ -7,6 +14,7 @@ private:
     static int clientLevel;
     static int clientXP;
     static int clientXPThresh;
+    std::map<int, Biomes> biomeMap;
     int biome;
 public:
     GameHUD();
