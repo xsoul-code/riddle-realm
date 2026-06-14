@@ -3,10 +3,6 @@
 #include "../include/GameHUD.hpp"
 #include "../include/GameState.hpp"
 
-std::string GameHUD::clientName;
-int GameHUD::clientLevel;
-int GameHUD::clientXP;
-int GameHUD::clientXPThresh;
 
 std::map<int, Biomes> biomeMap = {
     {1, Biomes::Woods},

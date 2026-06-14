@@ -10,10 +10,10 @@ enum class Biomes {
 
 class GameHUD {
 private:
-    static std::string clientName;
-    static int clientLevel;
-    static int clientXP;
-    static int clientXPThresh;
+    std::string clientName;
+    int clientLevel;
+    int clientXP;
+    int clientXPThresh;
     std::map<int, Biomes> biomeMap;
     int biome;
 public:

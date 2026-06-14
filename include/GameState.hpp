@@ -3,11 +3,13 @@
 #include "GameHUD.hpp"
 #include "Cmd.hpp"
 
+enum class Screen {Menu=0, NewGame=1, ItemShop=2, Adventure=3, Hero=4, Biomes=5};
+
 class GameState { 
 private:
-    static int state;
+    static Screen state;
 public:
-    static int getState() { return state; }
+    static Screen getState() { return state; }
     GameHUD HUD;
     GameState();
     ~GameState() = default;

@@ -6,14 +6,14 @@
 #include "../include/Tools.hpp"
 #include "../include/GameHUD.hpp"
 
-int GameState::state = 0;
+Screen GameState::state = Screen::Menu;
 
 GameState::GameState() {
-    GameState::state = 0;
+    GameState::state = Screen::Menu;
 }
 
 void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
-    if(state == 0) {
+    if(state == Screen::Menu) {
         switch(input->second) {
             case Cmd::MENU: {
                 std::cout << "You are in Menu already!\n";
@@ -87,27 +87,27 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
 void GameState::displayCurrState() {
     SetTerminalColor(T_BrCyan);
     switch(state) {
-        case 0: {
+        case Screen::Menu: {
             std::cout << "You are in main menu.\n"; 
             break;
         }
-        case 1: {
+        case Screen::NewGame: {
             std::cout << "You are in new game creation.\n";
             break;
         }
-        case 2: {
+        case Screen::ItemShop: {
             std::cout << "You are in your local ItemShop.\n";
             break;
         }
-        case 3: {
+        case Screen::Adventure: {
             std::cout << "You are pursuing an adventure.\n";
             break;
         }
-        case 4: {
+        case Screen::Hero: {
             std::cout << "You are viewing your hero.\n";
             break;
         }
-        case 5: {
+        case Screen::Biomes: {
             std::cout << "You are admiring biomes.\n";
             break;
         }
@@ -120,7 +120,7 @@ void GameState::displayCurrState() {
 
 void GameState::Menu() {
     clearScreen();
-    state = 0;
+    state = Screen::Menu;
     SetTerminalColor(T_BrWhite);
     std::cout << "Welcome to RiddleRealm!\n"; 
     std::cout << "\nA game which aims to combine idle grind with a sprinkle of mind puzzles. ";
@@ -130,27 +130,27 @@ void GameState::Menu() {
 }
 
 void GameState::NewGame() {
-    state = 1;
+    state = Screen::NewGame;
     std::cout << "NewGame!\n";
 }
 
 void GameState::ItemShop() {
-    state = 2;
+    state = Screen::ItemShop;
     std::cout << "ItemShop!\n";
 }
 
 void GameState::Adventure() {
-    state = 3;
+    state = Screen::Adventure;
     std::cout << "Adventure!\n";
 }
 
 void GameState::Hero() {
-    state = 4;
+    state = Screen::Hero;
     std::cout << "Hero!\n"; 
     HUD.printGenericInfo();
 }
 
 void GameState::Biomes() {
-    state = 5;
+    state = Screen::Biomes;
     std::cout << "Biomes!\n";
 }

@@ -17,12 +17,12 @@ Game::~Game() {}
 void Game::commandList() {
     SetTerminalColor(T_BrBlue);
     std::cout << "List of cmds ---> ";
-    int state = GameState::getState();
+    Screen state = GameState::getState();
     for(const auto& [key, cmd] : cmdMap) {
         auto ctx = cmdCtxMap.at(cmd);
         if(!isInitialized && ctx != CmdCtx::PRE_GAME && ctx != CmdCtx::ALWAYS) continue;
-        if(isInitialized && state == 0 && ctx != CmdCtx::MENU && ctx != CmdCtx::ALWAYS) continue;
-        if(isInitialized && state > 0 && ctx != CmdCtx::IN_GAME && ctx != CmdCtx::ALWAYS) continue;
+        if(isInitialized && state == Screen::Menu && ctx != CmdCtx::MENU && ctx != CmdCtx::ALWAYS) continue;
+        if(isInitialized && state != Screen::Menu && ctx != CmdCtx::IN_GAME && ctx != CmdCtx::ALWAYS) continue;
         SetTerminalColor(isInitialized ? T_BrYellow : T_BrGreen);
         std::cout << key << ", ";
     }
@@ -31,8 +31,7 @@ void Game::commandList() {
 }
 
 void Game::update(std::string ipt) {
-    
-    std::transform(input.begin(), input.end(), input.begin(), ::tolower); // To lower input
+    std::transform(ipt.begin(), ipt.end(), ipt.begin(), tolower); // To lower input
     auto var = cmdMap.find(ipt);
     if(var != cmdMap.end()) {
         Cmd cmd = var->second;
