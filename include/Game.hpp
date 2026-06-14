@@ -10,7 +10,6 @@ private:
     std::string input;
     bool isInitialized;
     GameState gSt;
-    GameHUD gHUD;
 public:
     Game();
     ~Game();

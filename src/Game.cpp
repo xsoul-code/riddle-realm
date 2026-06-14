@@ -15,19 +15,20 @@ Game::Game() {
 Game::~Game() {}
 
 void Game::commandList() {
-    SetTerminalColor(T_BrBlue);
-    std::cout << "List of cmds ---> ";
+    {
+        Color c(T_BrBlue);
+        std::cout << "List of cmds ---> ";
+    }
     Screen state = GameState::getState();
     for(const auto& [key, cmd] : cmdMap) {
         auto ctx = cmdCtxMap.at(cmd);
         if(!isInitialized && ctx != CmdCtx::PRE_GAME && ctx != CmdCtx::ALWAYS) continue;
         if(isInitialized && state == Screen::Menu && ctx != CmdCtx::MENU && ctx != CmdCtx::ALWAYS) continue;
         if(isInitialized && state != Screen::Menu && ctx != CmdCtx::IN_GAME && ctx != CmdCtx::ALWAYS) continue;
-        SetTerminalColor(isInitialized ? T_BrYellow : T_BrGreen);
+        Color c(isInitialized ? T_BrYellow : T_BrGreen);
         std::cout << key << ", ";
     }
     std::cout << "\n";
-    ResetTerminalColor();
 }
 
 void Game::update(std::string ipt) {
@@ -39,9 +40,10 @@ void Game::update(std::string ipt) {
             switch(cmd) {
             case Cmd::START:
                 isInitialized = true;
-                SetTerminalColor(T_BrGreen);
-                std::cout << "START\n";
-                ResetTerminalColor();
+                {
+                    Color c(T_BrGreen);
+                    std::cout << "START\n";
+                }
                 // TODO: Implement lockin in game state to prevent access of menu cmds
                 gSt.Menu();
                 break;
@@ -56,10 +58,10 @@ void Game::update(std::string ipt) {
             case Cmd::L_CMD: 
                 commandList();
                 break;
-            default:  
-                SetTerminalColor(T_Blue);
+            default: {
+                Color c(T_Blue);
                 std::cout << "Game not initialized. Please use ---> start / go\n";
-                ResetTerminalColor();
+            }
             }
         } 
         else {
@@ -81,9 +83,8 @@ void Game::update(std::string ipt) {
         }
     }
     else {
-        SetTerminalColor(T_Red);
-        std::cout << "Unexpected Command! (cmd or help for list of commands) \n"; 
-        ResetTerminalColor();
+        Color c(T_Red);
+        std::cout << "Unexpected Command! (cmd or help for list of commands) \n";
     }
 
 }
@@ -95,9 +96,10 @@ void Game::render() {
 void Game::run() {
     
     while (isRunning) {
-        SetTerminalColor(T_Yellow);
-        std::cout << "Enter your command ---> ";
-        ResetTerminalColor();
+        {
+            Color c(T_Yellow);
+            std::cout << "Enter your command ---> ";
+        }
         std::getline(std::cin, input);
         std::cout << "\n";
         update(input);

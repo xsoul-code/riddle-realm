@@ -5,11 +5,14 @@
 
 int main() {
     clearScreen();
-    SetTerminalColor(T_Green);
-    printASCII("misc/mainmenu.txt");
-    SetTerminalColor(T_BrGreen);
-    std::cout << "Terminal Game v0.0.1 Alpha - Why did I do this to myself? \n"; 
-    ResetTerminalColor();
+    {
+        Color c(T_Green);
+        printASCII("misc/mainmenu.txt");
+    }
+    {
+        Color c(T_BrGreen);
+        std::cout << "Terminal Game v0.0.1 Alpha - Why did I do this to myself? \n";
+    }
     Game game;
     game.run();
     return 0;

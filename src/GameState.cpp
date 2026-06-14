@@ -27,7 +27,7 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
             case Cmd::L_CMD: {
                 std::cout << "List of Menu cmds: ";
                 for(const auto& [cmd, _] : cmdMap) {
-                    SetTerminalColor(T_BrYellow);
+                    Color c(T_BrYellow);
                     std::cout << cmd << ", " << std::endl;
                 }
                 break;
@@ -41,11 +41,14 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
                 break;
             }
             default: {
-                SetTerminalColor(T_Green);
-                std::cout << input->first;
-                SetTerminalColor(T_Magenta);
-                std::cout << " cannot be used here. You must be in-game.\n";
-                ResetTerminalColor();
+                {
+                    Color c(T_Green);
+                    std::cout << input->first;
+                }
+                {
+                    Color c(T_Magenta);
+                    std::cout << " cannot be used here. You must be in-game.\n";
+                }
                 break;
             }
         }
@@ -73,11 +76,14 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
                 break;
             }
             default: {
-                SetTerminalColor(T_Green);
-                std::cout << input->first;
-                SetTerminalColor(T_Magenta);
-                std::cout << " is not an in-game command.\n";
-                ResetTerminalColor();
+                {
+                    Color c(T_Green);
+                    std::cout << input->first;
+                }
+                {
+                    Color c(T_Magenta);
+                    std::cout << " is not an in-game command.\n";
+                }
                 break;
             }
         }
@@ -85,7 +91,7 @@ void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
 }
 
 void GameState::displayCurrState() {
-    SetTerminalColor(T_BrCyan);
+    Color c(T_BrCyan);
     switch(state) {
         case Screen::Menu: {
             std::cout << "You are in main menu.\n"; 
@@ -121,12 +127,11 @@ void GameState::displayCurrState() {
 void GameState::Menu() {
     clearScreen();
     state = Screen::Menu;
-    SetTerminalColor(T_BrWhite);
-    std::cout << "Welcome to RiddleRealm!\n"; 
+    Color c(T_BrWhite);
+    std::cout << "Welcome to RiddleRealm!\n";
     std::cout << "\nA game which aims to combine idle grind with a sprinkle of mind puzzles. ";
     std::cout << "This is an open source project created solely for fun of programming and problem-solving.\n";
     std::cout << "Start a new game or load up from save (comming soon!) to begin your adventure!\n";
-    ResetTerminalColor();
 }
 
 void GameState::NewGame() {

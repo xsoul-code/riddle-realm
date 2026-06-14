@@ -20,10 +20,19 @@
 #define T_BrCyan 96
 #define T_BrWhite 97
 
+void SetTerminalColor(int textColor);
+
+void ResetTerminalColor();
+
+struct Color {
+    Color(int c) {
+        SetTerminalColor(c);
+    }
+    ~Color() {
+        ResetTerminalColor();
+    }
+};
+
 void clearScreen();
 
 void printASCII(const std::string& filename);
-
-void SetTerminalColor(int textColor); 
-
-void ResetTerminalColor(); 
