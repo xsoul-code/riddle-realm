@@ -3,6 +3,7 @@
 #include <string>
 #include "GameState.hpp"
 #include "GameHUD.hpp"
+#include "Command.hpp"
 
 class Game {
 private:
@@ -17,4 +18,8 @@ public:
     void update(std::string ipt);
     void render();
     void commandList();
+    GameState& state()        { return gSt; }
+    void markInitialized()    { isInitialized = true; }
+    void stop()               { isRunning = false; }
+    bool isAvailable(CmdCtx ctx) const;
 };

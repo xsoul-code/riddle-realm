@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #define T_Black 30
 #define T_Red 31
@@ -31,6 +32,16 @@ struct Color {
     ~Color() {
         ResetTerminalColor();
     }
+};
+
+struct ColorCout {
+    ColorCout(int c, const std::string& str) {
+        SetTerminalColor(c);
+        std::cout << str << std::endl;
+    };
+    ~ColorCout() {
+        ResetTerminalColor();
+    };
 };
 
 void clearScreen();

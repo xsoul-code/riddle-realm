@@ -2,7 +2,6 @@
 #include <string>
 #include <algorithm>
 #include "../include/GameState.hpp"
-#include "../include/Cmd.hpp"
 #include "../include/Tools.hpp"
 #include "../include/GameHUD.hpp"
 
@@ -10,84 +9,6 @@ Screen GameState::state = Screen::Menu;
 
 GameState::GameState() {
     GameState::state = Screen::Menu;
-}
-
-void GameState::process(std::map<std::string, Cmd>::const_iterator input) {
-    if(state == Screen::Menu) {
-        switch(input->second) {
-            case Cmd::MENU: {
-                std::cout << "You are in Menu already!\n";
-                break;
-            }
-            case Cmd::NEWGAME: {
-                std::cout << "You've chosen to create a new adventure.\n";
-                NewGame();
-                break;
-            }
-            case Cmd::L_CMD: {
-                std::cout << "List of Menu cmds: ";
-                for(const auto& [cmd, _] : cmdMap) {
-                    Color c(T_BrYellow);
-                    std::cout << cmd << ", " << std::endl;
-                }
-                break;
-            }
-            case Cmd::LOAD: {
-                std::cout << "LOAD GAME - Coming soon!\n";
-                break;
-            }
-            case Cmd::WHERE: {
-                displayCurrState();
-                break;
-            }
-            default: {
-                {
-                    Color c(T_Green);
-                    std::cout << input->first;
-                }
-                {
-                    Color c(T_Magenta);
-                    std::cout << " cannot be used here. You must be in-game.\n";
-                }
-                break;
-            }
-        }
-    }
-    else {
-        switch(input->second) {
-            case Cmd::ITEMSHOP: {
-                ItemShop();
-                break;
-            }
-            case Cmd::HERO: {
-                Hero();
-                break;
-            }
-            case Cmd::ADVENTURE: {
-                Adventure();
-                break;
-            }
-            case Cmd::BIOMES: {
-                Biomes();
-                break;
-            }
-            case Cmd::WHERE: {
-                displayCurrState();
-                break;
-            }
-            default: {
-                {
-                    Color c(T_Green);
-                    std::cout << input->first;
-                }
-                {
-                    Color c(T_Magenta);
-                    std::cout << " is not an in-game command.\n";
-                }
-                break;
-            }
-        }
-    }
 }
 
 void GameState::displayCurrState() {
@@ -134,28 +55,69 @@ void GameState::Menu() {
     std::cout << "Start a new game or load up from save (comming soon!) to begin your adventure!\n";
 }
 
+static HeroClass chooseHeroClass() {
+    while (true) {
+        {
+            Color c(T_Yellow);
+            std::cout << "Choose your class - 1) Warrior  2) Mage  3) Rogue ---> ";
+        }
+        std::string in;
+        std::getline(std::cin, in);
+        std::transform(in.begin(), in.end(), in.begin(),
+                       [](unsigned char ch){ return std::tolower(ch); });
+        if (in == "1" || in == "warrior") return HeroClass::Warrior;
+        if (in == "2" || in == "mage")    return HeroClass::Mage;
+        if (in == "3" || in == "rogue")   return HeroClass::Rogue;
+        Color c(T_Red);
+        std::cout << "Invalid choice, try again.\n";
+    }
+}
+
 void GameState::NewGame() {
     state = Screen::NewGame;
-    std::cout << "NewGame!\n";
+    {
+        Color c(T_BrWhite);
+        std::cout << "Let's create your hero!\n";
+    }
+
+    {
+        Color c(T_Yellow);
+        std::cout << "Enter your hero's name ---> ";
+    }
+    std::string name;
+    std::getline(std::cin, name);
+    if (name.empty()) name = "Nameless Hero";
+    HUD.setName(name);
+
+    HUD.setHeroClass(chooseHeroClass());
+
+    {
+        Color c(T_BrGreen);
+        std::cout << "Welcome, " << HUD.getName() << " the " << HUD.className()
+                  << "! Your adventure begins.\n\n";
+    }
+
+    state = Screen::Hero;
+    HUD.printGenericInfo();
 }
 
 void GameState::ItemShop() {
     state = Screen::ItemShop;
-    std::cout << "ItemShop!\n";
+    std::cout << "ItemShop\n";
 }
 
 void GameState::Adventure() {
     state = Screen::Adventure;
-    std::cout << "Adventure!\n";
+    std::cout << "Adventure: \n";
 }
 
 void GameState::Hero() {
     state = Screen::Hero;
-    std::cout << "Hero!\n"; 
+    std::cout << "Your Hero information: \n"; 
     HUD.printGenericInfo();
 }
 
 void GameState::Biomes() {
     state = Screen::Biomes;
-    std::cout << "Biomes!\n";
+    std::cout << "Biomes screen: \n";
 }
